@@ -7,6 +7,7 @@ import {
 import html2canvas from 'html2canvas';
 import ButterflyEffect from './ButterflyEffect';
 import Timeline from './Timeline';
+import FollowUpChat from './FollowUpChat';
 
 export default function UniverseCard({ universe, index }) {
   const [expanded, setExpanded] = useState(false);
@@ -71,6 +72,7 @@ export default function UniverseCard({ universe, index }) {
               </div>
             </div>
             <div className="flex gap-2">
+              <FollowUpChat universe={universe} index={index} />
               <button
                 onClick={handleShare}
                 className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-all text-white/50 hover:text-white"

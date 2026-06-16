@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, User, Briefcase, MapPin, Target, Brain, Zap, RotateCcw } from 'lucide-react';
+import { Sparkles, User, Briefcase, MapPin, Target, Brain, Zap, RotateCcw, Crown } from 'lucide-react';
 import { getRandomProfile } from '../utils/surpriseProfiles';
 
 const ageRanges = ['18-24', '25-34', '35-44', '45-54', '55+'];
@@ -18,6 +18,7 @@ export default function InputForm({ onSubmit, isLoading }) {
   });
 
   const [interestInput, setInterestInput] = useState('');
+  const [premium, setPremium] = useState(false);
 
   const handleChange = (field, value) => {
     setForm(prev => ({ ...prev, [field]: value }));
@@ -48,7 +49,7 @@ export default function InputForm({ onSubmit, isLoading }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.name || !form.currentRole || !form.ageRange) return;
-    onSubmit(form);
+    onSubmit({ ...form, premium });
   };
 
   const inputClass = "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-glow-purple/50 focus:bg-white/8 transition-all duration-300";
@@ -199,6 +200,23 @@ export default function InputForm({ onSubmit, isLoading }) {
         />
       </div>
 
+      <div className="flex items-center justify-between p-3 rounded-xl bg-glow-purple/5 border border-glow-purple/10">
+        <div className="flex items-center gap-2">
+          <Crown size={16} className="text-glow-purple" />
+          <span className="text-sm text-white/70">Premium Mode</span>
+          <span className="text-xs text-white/30">(10 universes)</span>
+        </div>
+        <button
+          type="button"
+          onClick={() => setPremium(!premium)}
+          className={`relative w-10 h-5 rounded-full transition-all ${premium ? 'bg-glow-purple' : 'bg-white/10'}`}
+        >
+          <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all ${premium ? 'left-5.5' : 'left-0.5'}`}
+            style={{ left: premium ? '22px' : '2px' }}
+          />
+        </button>
+      </div>
+
       <motion.button
         type="submit"
         disabled={isLoading || !form.name || !form.currentRole || !form.ageRange}
@@ -214,7 +232,7 @@ export default function InputForm({ onSubmit, isLoading }) {
         ) : (
           <>
             <Sparkles size={20} />
-            Generate Universes
+            Generate {premium ? '10' : '5'} Universes
           </>
         )}
       </motion.button>

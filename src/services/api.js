@@ -1,11 +1,11 @@
-export async function generateUniverses(userData) {
+export async function generateUniverses(userData, count = 5) {
   const interests = Array.isArray(userData.interests)
     ? userData.interests.join(', ')
     : userData.interests || 'Not specified';
 
   const prompt = `You are OtherYou, an AI multiverse storyteller.
 
-Generate 5 alternate life paths for a person using the provided information.
+Generate ${count} alternate life paths for a person using the provided information.
 
 These universes should be believable, surprising, emotionally engaging, and diverse.
 Avoid fantasy powers or unrealistic outcomes.
@@ -45,7 +45,7 @@ Format:
 }
 
 Rules:
-- Generate exactly 5 universes.
+- Generate exactly ${count} universes.
 - Make each universe significantly different.
 - Keep responses concise.
 - Focus on career, lifestyle, relationships, and personal growth.
