@@ -11,9 +11,13 @@
 
   body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background: #0a0a1a;
-    color: #fff;
     overflow-x: hidden;
+  }
+
+  html.light body,
+  html.light #root {
+    background: #f8fafc;
+    color: #1e293b;
   }
 
   ::-webkit-scrollbar {
@@ -21,7 +25,7 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #0a0a1a;
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -43,6 +47,12 @@
     border-radius: 16px;
   }
 
+  html.light .glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+  }
+
   .glass-card-hover {
     transition: all 0.3s ease;
   }
@@ -52,6 +62,11 @@
     border-color: rgba(168, 85, 247, 0.3);
     box-shadow: 0 0 30px rgba(168, 85, 247, 0.15);
     transform: translateY(-4px);
+  }
+
+  html.light .glass-card-hover:hover {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 8px 40px rgba(168, 85, 247, 0.12);
   }
 
   .gradient-text {
@@ -95,9 +110,19 @@
     border: 1px solid rgba(255, 255, 255, 0.15);
   }
 
+  html.light .btn-secondary {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #475569;
+  }
+
   .btn-secondary:hover {
     background: rgba(255, 255, 255, 0.12);
     border-color: rgba(168, 85, 247, 0.4);
+  }
+
+  html.light .btn-secondary:hover {
+    background: rgba(0, 0, 0, 0.08);
   }
 
   .cosmic-gradient {
@@ -106,9 +131,35 @@
                 radial-gradient(ellipse at 50% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 50%);
   }
 
+  html.light .cosmic-gradient {
+    background: radial-gradient(ellipse at 20% 50%, rgba(168, 85, 247, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(236, 72, 153, 0.03) 0%, transparent 50%);
+  }
+
   .particle {
     position: absolute;
     border-radius: 50%;
     pointer-events: none;
   }
 }
+
+html.light .text-white { color: #1e293b; }
+html.light .text-white\/80 { color: rgba(30, 41, 59, 0.8); }
+html.light .text-white\/70 { color: rgba(30, 41, 59, 0.7); }
+html.light .text-white\/60 { color: rgba(30, 41, 59, 0.6); }
+html.light .text-white\/50 { color: rgba(30, 41, 59, 0.5); }
+html.light .text-white\/40 { color: rgba(30, 41, 59, 0.4); }
+html.light .text-white\/30 { color: rgba(30, 41, 59, 0.3); }
+html.light .text-white\/20 { color: rgba(30, 41, 59, 0.2); }
+
+html.light .bg-white\/5 { background: rgba(0, 0, 0, 0.04); }
+html.light .bg-white\/8 { background: rgba(0, 0, 0, 0.06); }
+html.light .bg-white\/10 { background: rgba(0, 0, 0, 0.06); }
+html.light .bg-white\/12 { background: rgba(0, 0, 0, 0.08); }
+html.light .bg-white\/15 { background: rgba(0, 0, 0, 0.1); }
+
+html.light .border-white\/10 { border-color: rgba(0, 0, 0, 0.1); }
+html.light .border-white\/5 { border-color: rgba(0, 0, 0, 0.05); }
+
+html.light .bg-cosmic-900\/70 { background: rgba(248, 250, 252, 0.85); }

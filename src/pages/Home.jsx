@@ -1,9 +1,12 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Sparkles, ArrowRight, Orbit } from 'lucide-react';
+import { Sparkles, Orbit } from 'lucide-react';
 import InputForm from '../components/InputForm';
+import ThemeToggle from '../components/ThemeToggle';
+import History from '../components/History';
 import { generateUniverses } from '../services/api';
+import { saveToHistory } from '../utils/history';
 
 function ParticleField() {
   const particles = Array.from({ length: 50 }, (_, i) => ({
@@ -54,9 +57,11 @@ export default function Home() {
     setIsLoading(true);
     setError(null);
     try {
-      const result = await generateUniverses(userData);
+      const count = userData.premium ? 10 : 5;
+      const result = await generateUniverses(userData, count);
       sessionStorage.setItem('universes', JSON.stringify(result.universes));
       sessionStorage.setItem('userData', JSON.stringify(userData));
+      saveToHistory(userData, result.universes);
       navigate('/results');
     } catch (err) {
       console.error(err);
@@ -64,6 +69,12 @@ export default function Home() {
     } finally {
       setIsLoading(false);
     }
+  }, [navigate]);
+
+  const handleLoadHistory = useCallback((userData, universes) => {
+    sessionStorage.setItem('universes', JSON.stringify(universes));
+    sessionStorage.setItem('userData', JSON.stringify(userData));
+    navigate('/results');
   }, [navigate]);
 
   return (
@@ -82,6 +93,10 @@ export default function Home() {
           </div>
           <span className="text-xl font-bold gradient-text">OtherYou</span>
         </div>
+        <div className="flex items-center gap-2">
+          <History onLoad={handleLoadHistory} />
+          <ThemeToggle />
+        </div>
       </header>
 
       <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 pb-12">
@@ -94,9 +109,9 @@ export default function Home() {
             <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-tight">
               <span className="gradient-text">Meet the versions</span>
               <br />
-              <span className="text-white">of yourself that</span>
+              <span>of yourself that</span>
               <br />
-              <span className="text-white/70">never existed.</span>
+              <span className="opacity-70">never existed.</span>
             </h1>
           </motion.div>
 
@@ -104,7 +119,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-lg text-white/40 font-light"
+            className="text-lg opacity-40 font-light"
           >
             Every choice creates a different story.
           </motion.p>
@@ -141,10 +156,10 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="mt-12 flex items-center gap-2 text-white/20 text-sm"
+          className="mt-12 flex items-center gap-2 opacity-20 text-sm"
         >
           <Sparkles size={14} />
-          <span>Powered by AI • 5 unique universes generated</span>
+          <span>Powered by AI • 5 or 10 unique universes generated</span>
         </motion.div>
       </main>
     </motion.div>

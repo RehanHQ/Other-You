@@ -1,10 +1,12 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Orbit, ArrowLeft, Sparkles, Grid, List } from 'lucide-react';
 import UniverseCard from '../components/UniverseCard';
 import Compass from '../components/Compass';
 import PassportCard from '../components/PassportCard';
+import CompareMode from '../components/CompareMode';
+import ThemeToggle from '../components/ThemeToggle';
 import LoadingScreen from '../components/LoadingScreen';
 
 export default function Results() {
@@ -42,7 +44,7 @@ export default function Results() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate('/')}
-              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-all text-white/50 hover:text-white"
+              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-all opacity-50 hover:opacity-100"
             >
               <ArrowLeft size={18} />
             </button>
@@ -55,15 +57,16 @@ export default function Results() {
           </div>
 
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <button
               onClick={() => setView('cards')}
-              className={`p-2 rounded-lg transition-all ${view === 'cards' ? 'bg-glow-purple/20 text-glow-purple' : 'bg-white/5 text-white/40 hover:text-white/60'}`}
+              className={`p-2 rounded-lg transition-all ${view === 'cards' ? 'bg-glow-purple/20 text-glow-purple' : 'bg-white/5 opacity-40 hover:opacity-60'}`}
             >
               <List size={18} />
             </button>
             <button
               onClick={() => setView('grid')}
-              className={`p-2 rounded-lg transition-all ${view === 'grid' ? 'bg-glow-purple/20 text-glow-purple' : 'bg-white/5 text-white/40 hover:text-white/60'}`}
+              className={`p-2 rounded-lg transition-all ${view === 'grid' ? 'bg-glow-purple/20 text-glow-purple' : 'bg-white/5 opacity-40 hover:opacity-60'}`}
             >
               <Grid size={18} />
             </button>
@@ -77,21 +80,22 @@ export default function Results() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-10"
         >
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+          <h1 className="text-3xl md:text-4xl font-bold mb-2">
             Your Parallel Lives
           </h1>
-          <p className="text-white/40">
+          <p className="opacity-40">
             {universes.length} alternate realities discovered
           </p>
         </motion.div>
 
         <Compass universes={universes} />
 
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold text-white flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-3 mb-6">
+          <h2 className="text-xl font-semibold flex items-center gap-2 mr-auto">
             <Sparkles size={18} className="text-glow-purple" />
             Universe Explorer
           </h2>
+          <CompareMode universes={universes} />
           <button
             onClick={() => setShowPassports(!showPassports)}
             className="btn-secondary text-sm"
